@@ -1,0 +1,84 @@
+<div class="page-title">
+  <nav class="breadcrumb-nav">
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a routerLink="/positions" class="breadcrumb">Номенклатура</a>
+        <a
+          class="breadcrumb"
+          *ngFor="let breatc of breadcrumbs$; index as i"
+          [routerLink] = "['/positions', breatc.id]"
+        >{{breatc.name}}</a>
+      </div>
+    </div>
+  </nav>
+</div>
+<div class="row right">
+  <button
+    class="waves-effect waves-light btn grey darken-1 mr20"
+    routerLink="/position/new"
+    [queryParams]="curent_cat_id?{'parent':curent_cat_id}:{}"
+  >Додати позицію</button>
+  <button
+    class="waves-effect waves-light btn grey darken-1"
+    routerLink="/category/new"
+    [queryParams]="curent_cat_id?{'parent':curent_cat_id}:{}"
+  >Додати категорію</button>
+</div>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<div
+  class="row"
+  *ngIf="categories$ | async as catResponse; else  loader"
+>
+  <div class="col s12"
+       *ngIf="positions$ | async as posResponse; else  loader"
+  >
+    <ul class="collection" *ngIf="catResponse.categories.length > 0 || posResponse.positions.length > 0; else empty">
+      <!------- Categories layout ------------>
+      <li
+        class="collection-item collection-item-icon avatar"
+        *ngFor="let category of catResponse.categories"
+      >
+        <img src="{{category.imageSrc?category.imageSrc:'/uploads/folder.png'}}" alt="" class="circle folder">
+        <a [routerLink]="['/positions/', category._id]" class="w100 folder-title">{{category.name}}</a>
+        <span><a [routerLink]="['/category/change', category._id]"><i class="material-icons">create</i></a></span>
+        <span><a (click)="removeCat(category._id, category.name)"><i class="material-icons">delete</i></a></span>
+      </li>
+      <!------- Products layout ------------>
+      <li
+        class="collection-item collection-item-icon avatar"
+        *ngFor="let position of posResponse.positions"
+        >
+        <img src="{{position.imageSrc?position.imageSrc:'/uploads/noimage.jpg'}}" alt="" class="circle">
+        <a [routerLink]="['/position/change', position._id]" class="w100">{{position.name}} <strong>{{position.cost?'- '+position.cost+' грн':''}}</strong></a>
+        <span><a [routerLink]="['/position/change', position._id]"><i class="material-icons">create</i></a></span>
+        <span><a (click)="removePos(position._id, position.name)"><i class="material-icons">delete</i></a></span>
+      </li>
+    </ul>
+    <ng-template #empty>
+      <div class="center">No items found</div>
+    </ng-template>
+  </div>
+</div>
+
+<div class="fixed-action-btn" #floatBtn>
+  <a class="btn-floating btn-large red">
+    <i class="large material-icons">add</i>
+  </a>
+  <ul>
+    <li><a
+      class="btn-floating green"
+      routerLink="/position/new"
+      [queryParams]="curent_cat_id?{'parent':curent_cat_id}:{}"
+    ><i class="material-icons">control_point</i></a></li>
+    <li><a
+      class="btn-floating blue"
+      routerLink="/category/new"
+      [queryParams]="curent_cat_id?{'parent':curent_cat_id}:{}"
+    ><i class="material-icons">folder</i></a></li>
+  </ul>
+</div>

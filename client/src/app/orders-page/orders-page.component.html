@@ -1,0 +1,113 @@
+<div class="page-title">
+  <nav class="breadcrumb-nav">
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a routerLink="/orders" class="breadcrumb">Замовлення</a>
+      </div>
+    </div>
+  </nav>
+</div>
+<div class="row right">
+  <button
+    (click)="openFilter()"
+    class="waves-effect waves-light btn grey darken-1 mr20"><i class="small material-icons">filter_list</i></button>
+  <button
+    class="waves-effect waves-light btn darken-1 mr20"
+    routerLink="/order/new"><i class="small material-icons">add</i></button>
+
+</div>
+
+<div class="row">
+  <div class="col s12">
+
+    <div class="filter-pickers mb10">
+      <div class="chip"><b>Дата:</b> 01.04.2022 - 18.04.2022 <i class="close material-icons">close</i></div>
+      <div class="chip"><b>Клієнт:</b> Смачило Поліна <i class="close material-icons">close</i></div>
+    </div>
+
+    <div class="wrapper">
+      <ng-template #loader>
+        <app-loader></app-loader>
+      </ng-template>
+
+      <div *ngIf="!loading else loader"></div>
+      <table
+        mat-table [dataSource]="dataSource"
+        matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата</th>
+          <td mat-cell *matCellDef="let element"> {{element.date | date: 'dd.MM.yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Номер</th>
+          <td mat-cell *matCellDef="let element"> {{element.number}} </td>
+        </ng-container>
+        <ng-container matColumnDef="client_details">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Клієнт</th>
+          <td mat-cell *matCellDef="let element"> {{element.client_details[0].name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Статус оплати</th>
+          <td mat-cell *matCellDef="let element" [ngSwitch]="getPaymentStatus(element)">
+            <ng-container *ngFor="let pstat of paymentStatuses">
+              <span *ngSwitchCase="pstat.id" class="new badge {{pstat.class}}" data-badge-caption="">{{pstat.name}}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Сума</th>
+          <td mat-cell *matCellDef="let element">{{getTotal(element)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Дії</th>
+          <td mat-cell *matCellDef="let element">
+            <span><a [routerLink]="['/order/change', element._id]"><i class="material-icons">create</i></a></span>
+<!--            <span><a (click)="removeOrder(element._id, element.number)"><i class="material-icons">delete</i></a></span>-->
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    </div>
+
+
+    <ng-template #empty>
+      <div class="center">No items found</div>
+    </ng-template>
+  </div>
+</div>
+
+<!-- Modal Select Position -->
+<div id="filter_modal" class="modal" #modal_filter>
+  <div class="modal-content">
+    <h5>Фільтр <a (click)="closeFilter()" class="right close waves-effect waves-light"><i class="material-icons">clear</i></a></h5>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input
+        id="dateFrom"
+        type="date"
+        formControlName="dateFrom">
+        <label for="dateFrom">Дата з</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+        id="dateTo"
+        type="date"
+        formControlName="dateTo">
+        <label for="dateFrom">Дата по</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <button
+      class="waves-effect waves-light btn right"
+      ><i class="material-icons left">check</i>Фільтр</button>
+      <button
+        class="waves-effect waves-light btn right grey darken-1 mr20"
+      ><i class="material-icons left">clear</i>Скинути</button>
+    </div>
+  </div>
+</div>

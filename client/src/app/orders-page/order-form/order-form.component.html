@@ -1,0 +1,176 @@
+<div class="page-title">
+  <nav class="breadcrumb-nav">
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a routerLink="/orders" class="breadcrumb">Замовлення</a>
+        <a class="breadcrumb">{{isNew ? 'Додати' : 'Змінити'}}</a>
+        <span class="right">
+          <button
+            type="submit"
+            [disabled]="form.invalid || form.disabled"
+            class="waves-effect waves-light btn"
+            (click)="onSubmit()"
+          >
+            Зберегти зміни
+          </button>
+        </span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<ng-container *ngIf="!loading else loader"></ng-container>
+<div class="row">
+  <form class="col s12" [formGroup]="form" (ngSubmit)="onSubmit">
+    <div class="row">
+      <div class="input-field col s1">
+        <input id="number" type="text" formControlName="number" readonly >
+        <label for="number">Номер</label>
+      </div>
+      <div class="input-field col s2">
+        <input id="date" type="date" formControlName="date" >
+        <label for="date">Дата</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <input
+          id="client"
+          type="text"
+          formControlName="client"
+          hidden
+        >
+        <input
+          id="clientName"
+          type="text"
+          formControlName="clientName"
+          [ngClass]="{'invalid': form.get('client').invalid && form.get('clientName').touched}"
+          readonly
+        >
+        <label for="clientName">Клієнт</label>
+        <i (click)="client_sel.openModal()" class="material-icons prefix select-button">more_horiz</i>
+        <span
+          class="helper-text red-text"
+          *ngIf="form.get('client').invalid && form.get('clientName').touched">Error found</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs" #order_tabs>
+          <li class="tab col s2"><a class="active waves-green" href="#products">Товари</a></li>
+          <li class="tab col s2"><a href="#payments">Оплати</a></li>
+          <li class="tab col s2"><a href="#additional">Додатково</a></li>
+        </ul>
+      </div>
+      <div id="products" class="col s12">
+        <!-------------- PRODUCTS BEGIN --------------->
+        <button
+          class="waves-effect waves-light btn-floating darken-1 mr20 mt10"
+          (click)="addListRow('')"><i class="small material-icons">add</i></button>
+<!--        <button-->
+<!--          class="waves-effect waves-light btn-floating darken-1 mr20 mt10"-->
+<!--          (click)="addListRow('')"><i class="small material-icons">format_align_justify</i></button>-->
+<!--        <input id="icon_prefix" type="text" class="validate" #barcodeInput>-->
+        <ng-container formArrayName="list">
+          <table class="table_form mat-elevation-z8 mt10">
+            <thead>
+              <tr class="mat-header-row">
+                <td>Товар</td>
+                <td>Кількість</td>
+                <td>Ціна</td>
+                <td>Сума</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngIf="!listFormArray.length">
+              <td class="input-field col center" colspan="5">No ptoducts yet</td>
+            </tr>
+            <tr *ngFor="let listEl of listFormArray.controls; let i = index">
+              <ng-container [formGroupName]="i">
+                  <td class="input-field">
+                    <input id="name" class="w_auto" type="text" formControlName="name" readonly >
+                    <i (click)="pos_sel.openModal(i)" class="material-icons prefix select-button">more_horiz</i>
+                  </td>
+                  <td>
+                    <input id="quantity" type="number" formControlName="quantity" (change)="updateTotals(i)" >
+                  </td>
+                  <td>
+                    <input id="cost" type="number" formControlName="cost" (change)="updateTotals(i)" >
+                  </td>
+                  <td>
+                    <input id="total" type="number" formControlName="total" readonly >
+                  </td>
+                  <td>
+                    <button
+                      class="waves-effect waves-light btn red small-btn"
+                      type="button" (click)="removeListControl(i)"><i class="material-icons">clear</i></button>
+                  </td>
+              </ng-container>
+            </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <!-------------- PRODUCTS END --------------->
+      </div>
+      <div id="payments" class="col s12">
+        <!-------------- PAYMENT BEGIN --------------->
+        <button
+          class="waves-effect waves-light btn-floating darken-1 mr20 mt10"
+          (click)="addPaymentRow()"><i class="small material-icons">add</i></button>
+        <ng-container formArrayName="payment">
+          <table class="table_form mat-elevation-z8 mt10">
+            <thead>
+            <tr class="mat-header-row">
+              <td>Тип оплати</td>
+              <td>Сума</td>
+              <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngIf="!paymentFormArray.length">
+              <td class="input-field col center" colspan="5">No payments yet</td>
+            </tr>
+            <tr *ngFor="let listEl of paymentFormArray.controls; let i = index">
+              <ng-container [formGroupName]="i">
+                <td class="input-field">
+<!--                  <input id="type" class="w_auto" type="text" formControlName="type" >-->
+                  <select class="browser-default" id="type" formControlName="type">
+                    <ng-container *ngFor="let ptype of paymentTypes">
+                      <option value="{{ptype.id}}" [selected]="ptype.id == listEl.value.type">{{ptype.name}}</option>
+                    </ng-container>
+                  </select>
+                </td>
+                <td>
+                  <input id="total" type="number" formControlName="total" >
+                </td>
+                <td>
+                  <button
+                    class="waves-effect waves-light btn red small-btn"
+                    type="button" (click)="removePaymentControl(i)"><i class="material-icons">clear</i></button>
+                </td>
+              </ng-container>
+            </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <!-------------- PAYMENT END --------------->
+      </div>
+      <div  id="additional" class="col s12">
+        <!-------------- ADDITIONAL BEGIN --------------->
+
+        <!-------------- ADDITIONAL END --------------->
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<!-- INCLUDES -->
+<app-select-position (parentComp)="positionAfterSelect($event)"></app-select-position>
+<app-select-client (parentComp)="clientAfterSelect($event)"></app-select-client>

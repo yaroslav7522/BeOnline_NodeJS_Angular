@@ -1,0 +1,90 @@
+<div class="page-title">
+    <nav class="breadcrumb-nav">
+      <div class="nav-wrapper">
+        <div class="col s12">
+          <a routerLink="/clients" class="breadcrumb">Клієнти</a>
+          <a class="breadcrumb">{{isNew ? 'Додати' : 'Змінити'}}</a>
+          <span class="right">
+            <button
+              class="btn-floating btn-small waves-effect waves-light red"
+              *ngIf="!isNew"
+              (click)="remove()"
+            >
+              <i class="material-icons">delete</i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </nav>
+</div>
+
+
+<ng-template>
+  <app-loader></app-loader>
+</ng-template>
+
+<div class="row">
+  <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit">
+    <div class="input-field">
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        [ngClass]="{'invalid': form.get('name').invalid && form.get('name').touched}"
+      >
+      <label for="name">Назва</label>
+      <span
+        class="helper-text red-text"
+        *ngIf="form.get('name').invalid && form.get('name').touched">Error found</span>
+    </div>
+    <div class="input-field">
+      <input
+        id="phone"
+        type="text"
+        formControlName="phone"
+      >
+      <label for="phone">Телефон</label>
+    </div>
+    <div class="input-field">
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        [ngClass]="{'invalid': form.get('email').invalid && form.get('email').touched}"
+      >
+      <label for="email">E-mail</label>
+      <span
+        class="helper-text red-text"
+        *ngIf="form.get('email').invalid && form.get('email').touched">Validation failed</span>
+    </div>
+    <div class="input-field">
+      <input
+        id="bdate"
+        type="text"
+        formControlName="bdate"
+        class="datepicker"
+        #datepicker >
+      <label for="bdate">Дата народження</label>
+    </div>
+    <div class="input-field">
+      <input
+        id="barcode"
+        type="text"
+        formControlName="barcode"
+      >
+      <label for="barcode">Штрихкод</label>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        [disabled]="form.invalid || form.disabled"
+        class="waves-effect waves-light btn"
+        (click)="onSubmit()"
+      >
+        Зберегти зміни
+      </button>
+    </div>
+  </form>
+
+</div>

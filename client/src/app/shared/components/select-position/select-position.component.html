@@ -1,0 +1,36 @@
+<!-- Modal Select Position -->
+<div id="positions_modal" class="modal" #modal_positions>
+  <div class="modal-content">
+    <h5>Підбір номенклатури <a (click)="close()" class="right close waves-effect waves-light"><i class="material-icons">clear</i></a></h5>
+
+    <div class="wrapper">
+      <div class="example-header">
+        <input matInput (keyup)="applyFilter()" placeholder="Пошук номенклатури..." #filter_txt>
+      </div>
+
+      <ng-template #loader><app-loader></app-loader></ng-template>
+
+      <div *ngIf="loaded else loader"></div>
+      <table
+        mat-table [dataSource]="dataSource"
+        matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва </th>
+          <td mat-cell *matCellDef="let element" (click)="selectRow(element)"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="barcode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Штрихкод </th>
+          <td mat-cell *matCellDef="let element" (click)="selectRow(element)"> {{element.barcode}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cost">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Ціна </th>
+          <td mat-cell *matCellDef="let element" (click)="selectRow(element)"> {{element.cost}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>

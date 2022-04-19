@@ -1,0 +1,56 @@
+.dn {display: none;}
+.dropdown-content {width: auto !important;}
+.ml20 {margin-left: 20px;}
+.divider_top {border-top: 1px solid #f0f0f0;}
+.breadcrumb-nav .nav-wrapper { padding: 0 20px; }
+.breadcrumb-nav {
+  height: auto;
+  background-color: #fff;
+}
+.w100 {width: 100%; }
+.mr20 {margin-right: 20px;}
+.mt10 {margin-top: 10px;}
+.mb10 {margin-bottom: 10px;}
+.collection .collection-item a {
+  display: block;
+  transition: .25s;
+  color: #26a69a;
+}
+.folder { border: 2px solid #dbdb12;}
+.folder-title {font-weight: bold;}
+.sidenav {background: #4ea69a;}
+.sidenav h4 {color: #fff; opacity: 1; }
+/*ul.sidenav li {background: #f4f4f4;}*/
+ul.sidenav li.active, ul.sidenav .logout {background-color: rgba(0,0,0,0.05);}
+
+.mat-table .material-icons { color: #26a69a; cursor: pointer;}
+.mat-table .material-icons:hover { color: #f44336 !important; }
+.content { padding: 0;}
+.content .row { padding: 0 20px;}
+.page-title {padding-top: 0 !important;}
+.breadcrumb:before, .breadcrumb:last-child { color: #000; }
+.nav-wrapper .btn i {line-height: inherit !important;}
+.nav-wrapper.auth {background: #4ea69a; }
+.tabs .tab a { color:#000;}
+.tabs .tab a:hover, .tabs .tab a.active {color:#26a69a; }
+/*.table_form thead tr td {font-weight: bold;}*/
+.table_form tbody tr td {padding: 0 5px;}
+.table_form td:first-of-type {padding-left: 24px;}
+.table_form td:last-of-type {padding-right: 24px;}
+.table_form tbody input {border-bottom: none !important;}
+.table_form tr:nth-child(even)    { background-color: rgba(241, 241, 241, 0.54); }
+.table_form select {border: none; background: none;}
+/*.select-button {font-size: inherit !important;     float: right;
+  top: -40px;
+  position: relative;
+  transition: opacity 0.2s linear;
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid;
+  border-radius: 8px;
+}*/
+.select-button {margin-left: -25px;display: none !important;position: absolute; width: 3rem; font-size: 2rem; transition: color .2s; top: 0.5rem;}
+.select-button.active, .select-button:hover {display: inline-block !important;}
+.small-btn {height: 20px; width: 20px; line-height: 20px; padding: 0;}
+.w_auto {width: auto;}
+.tabs-content {overflow-y: scroll;}

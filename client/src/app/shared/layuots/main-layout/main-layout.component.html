@@ -1,0 +1,13 @@
+<ul class="sidenav a-sidenav">
+  <div><h4>BeOnline</h4></div>
+  <li class="bold" routerLinkActive="active"><a routerLink="/overview" class="waves-effect waves-light">Обзор <i class="material-icons">picture_in_picture_alt</i></a></li>
+  <li class="bold" routerLinkActive="active"><a routerLink="/analytics" class="waves-effect waves-light">Аналітика <i class="material-icons">poll</i></a></li>
+  <li class="bold" routerLinkActive="active"><a routerLink="/orders" class="waves-effect waves-light">Замовлення <i class="material-icons">shopping_basket</i></a></li>
+  <!--<li class="bold" routerLinkActive="active"><a routerLink="/tables" class="waves-effect waves-light">Столи</a></li>-->
+  <li class="bold" routerLinkActive="active"><a routerLink="/clients" class="waves-effect waves-light">Клієнти <i class="material-icons">group</i></a></li>
+  <li class="bold" routerLinkActive="active"><a routerLink="/positions" class="waves-effect waves-light">Номенклатура <i class="material-icons">web</i></a></li>
+  <li class="bold last"><a class="waves-effect waves-orange logout" (click)="logout()">Вийти</a></li>
+</ul>
+<main class="content">
+    <router-outlet></router-outlet>
+</main>

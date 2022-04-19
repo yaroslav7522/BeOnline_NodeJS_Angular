@@ -1,0 +1,115 @@
+<div class="page-title">
+  <nav class="breadcrumb-nav">
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a routerLink="/positions" class="breadcrumb">Категорії</a>
+        <a class="breadcrumb">{{isNew ? 'Додати' : 'Змінити'}}</a>
+        <span class="right">
+            <button
+              class="btn-floating btn-small waves-effect waves-light red"
+              *ngIf="!isNew"
+              (click)="remove()"
+            >
+              <i class="material-icons">delete</i>
+            </button>
+          </span>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+<ng-template>
+  <app-loader></app-loader>
+</ng-template>
+
+<div class="row">
+  <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit">
+    <div>
+      <label for="name">Входить в групу</label>
+      <a
+        *ngIf="curentCatInfo$ | async as CategoriesResponse; else chooseNewCat"
+        class='dropdown-trigger btn ml20'
+        data-target='dropdown1'
+        #chooseParentCat
+      >{{ CategoriesResponse.success ? CategoriesResponse.category.name : '----- Choose category -----' }}</a>
+      <ng-template #chooseNewCat>
+        <a class='dropdown-trigger btn ml20' data-target='dropdown1' #chooseParentCat>----- Choose category -----</a>
+      </ng-template>
+      <ul
+        id='dropdown1' class='dropdown-content'
+        *ngIf="categoryTree$ | async as catTreeResponse;"
+      >
+        <li><a (click)="changeCategory('', '-- Без категорії --')">-- Без категорії --</a></li>
+        <li
+          *ngFor=" let cat of catTreeResponse.categories"
+          [ngClass]="category ?
+                      category.parent==cat._id ? 'active':
+                        category._id==cat._id ? 'dn':
+                          cat.level == 0 ? 'divider_top':''
+                    :''"
+        >
+          <a (click)="changeCategory(cat._id, cat.name)">
+            <span *ngFor="let i of [].constructor(cat.level)">-</span>
+            <!--<span *ngIf="cat.level > 0">&#10551;</span>-->
+            <span id="cat-name">{{cat.name}}</span>
+          </a>
+        </li>
+      </ul>
+      <input
+        id="parent"
+        type="text"
+        class="dn"
+        formControlName="parent"
+        [ngClass]="{'invalid': form.get('parent').invalid && form.get('parent').touched}"
+      >
+    </div>
+    <div class="input-field">
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        [ngClass]="{'invalid': form.get('name').invalid && form.get('name').touched}"
+      >
+      <label for="name">Назва</label>
+      <span
+        class="helper-text red-text"
+        *ngIf="form.get('name').invalid && form.get('name').touched"
+      >Error found</span>
+    </div>
+
+    <div>
+      <input
+        type="file"
+        class="dn"
+        #inputFile
+        (change)="onFileUpload($event)"
+      >
+
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        [disabled]="form.invalid || form.disabled"
+        class="waves-effect waves-light btn"
+        (click)="onSubmit()"
+      >
+        Зберегти зміни
+      </button>
+    </div>
+  </form>
+
+  <div class="col s12 l4 center">
+    <img class="responsive-img" style="height: 200px" src="{{catImg}}">
+    <button
+      type="button"
+      [disabled]="form.disabled"
+      class="waves-effect waves-light btn orange lighten-2 mb2"
+      (click)="triggerClick()"
+    >
+      <i class="material-icons left">backup</i>
+      Завантажити зображення
+    </button>
+  </div>
+</div>
