@@ -9,6 +9,9 @@ const orderSchema = new Schema({
     number: {
         type: Number
     },
+    status: {
+        type: Number
+    },
     client: {
         ref: 'clients',
         type: Schema.Types.ObjectId

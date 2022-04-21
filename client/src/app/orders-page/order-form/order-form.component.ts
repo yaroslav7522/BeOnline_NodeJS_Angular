@@ -45,6 +45,7 @@ export class OrderFormComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     MaterialService.InitTabs(this.order_tabs)
+    MaterialService.UpdateTxtFields()
     //MaterialService.InitSelect(this.selectField)
   }
 

@@ -1,0 +1,5 @@
+.modal-content a.close {color: #5a5a5a; cursor: pointer; }
+.mat-row:hover {
+  background-color: #efebe9;
+  cursor: pointer;
+}

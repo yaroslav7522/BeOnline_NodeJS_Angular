@@ -22,4 +22,14 @@ export class constService {
       {id: 2, name: 'Банківська карта'},
     ]
   }
+
+  getOrderStatuses(): any[]{
+    return [
+      {id: 1, name: 'Новий'},
+      {id: 2, name: 'Обробляється'},
+      {id: 3, name: 'Доставляється'},
+      {id: 4, name: 'Відмінено'},
+      {id: 5, name: 'Завершено'},
+    ]
+  }
 }

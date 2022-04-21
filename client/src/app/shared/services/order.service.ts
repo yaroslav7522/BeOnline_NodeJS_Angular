@@ -10,8 +10,8 @@ import {OrderResponse, OrdersResponse, PositionResponse} from "../interfaces";
 export class OrderService {
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<OrdersResponse>{
-    return this.http.get<OrdersResponse>('/api/order')
+  getAll(filter?: string): Observable<OrdersResponse>{
+    return this.http.get<OrdersResponse>('/api/order/' + (filter ? `?${filter}` : ''))
   }
 
   getById(id: string): Observable<OrderResponse>{
@@ -22,6 +22,7 @@ export class OrderService {
     const fp = new FormData()
     fp.append('client', formVal.client)
     fp.append('date', formVal.date)
+    fp.append('status', formVal.status)
 
     if(formVal.list){
       this.createFormData(fp, 'list', formVal.list)
@@ -37,6 +38,7 @@ export class OrderService {
     const fp = new FormData()
     fp.append('client', formVal.client)
     fp.append('date', formVal.date)
+    fp.append('status', formVal.status)
 
     if(formVal.list){
       this.createFormData(fp, 'list', formVal.list)

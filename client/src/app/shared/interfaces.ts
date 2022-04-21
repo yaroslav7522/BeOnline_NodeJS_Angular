@@ -76,6 +76,7 @@ export interface Order {
   _id?: string
   date: Date
   number: number
+  status: number
   user?: string
   client: Client
   list: [{

@@ -20,10 +20,14 @@
 <div class="row">
   <div class="col s12">
 
+    <!-- Active Filter BEGIN -->
     <div class="filter-pickers mb10">
-      <div class="chip"><b>Дата:</b> 01.04.2022 - 18.04.2022 <i class="close material-icons">close</i></div>
-      <div class="chip"><b>Клієнт:</b> Смачило Поліна <i class="close material-icons">close</i></div>
+      <div class="chip" *ngFor="let fel of filterColections; index as i">
+        <b>{{fel.title}}:</b> {{fel.value}} <i (click)="removeFilter(i, fel.name)" class="close material-icons">close</i>
+      </div>
+<!--      <div class="chip"><b>Клієнт:</b> Смачило Поліна <i class="close material-icons">close</i></div>-->
     </div>
+    <!-- Active Filter END -->
 
     <div class="wrapper">
       <ng-template #loader>
@@ -34,6 +38,14 @@
       <table
         mat-table [dataSource]="dataSource"
         matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="pays">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" [ngSwitch]="getPaymentStatus(element)">
+            <ng-container *ngFor="let pstat of paymentStatuses">
+              <i *ngSwitchCase="pstat.id" class="btn-floating small-btn {{pstat.class}}" title="{{pstat.name}}"></i>
+            </ng-container>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата</th>
           <td mat-cell *matCellDef="let element"> {{element.date | date: 'dd.MM.yyyy'}} </td>
@@ -79,35 +91,74 @@
   </div>
 </div>
 
-<!-- Modal Select Position -->
+<!-- Modal Filter BEGIN -->
 <div id="filter_modal" class="modal" #modal_filter>
   <div class="modal-content">
     <h5>Фільтр <a (click)="closeFilter()" class="right close waves-effect waves-light"><i class="material-icons">clear</i></a></h5>
 
-    <div class="row">
-      <div class="input-field col s6">
-        <input
-        id="dateFrom"
-        type="date"
-        formControlName="dateFrom">
-        <label for="dateFrom">Дата з</label>
+    <div [formGroup]="filterForm">
+      <div class="row">
+        <div class="input-field col s4">
+          <input
+          id="dateFrom"
+          type="date"
+          formControlName="dateFrom">
+          <label for="dateFrom">Дата з</label>
+        </div>
+        <div class="input-field col s4">
+          <input
+          id="dateTo"
+          type="date"
+          formControlName="dateTo">
+          <label for="dateTo">Дата по</label>
+        </div>
+        <div class="input-field col s4">
+          <select class="browser-default" (change)="changePeriod()" #periodSelect>
+            <option> --- Період --- </option>
+            <option value="today">Сьогодні</option>
+            <option value="yesterday">Вчора</option>
+            <option value="this_week">Цей тиждень</option>
+            <option value="last_week">Минулий тиждень</option>
+            <option value="this_month">Цей місяць</option>
+            <option value="last_month">Минулий місяць</option>
+            <option value="this_quarter">Цей квартал</option>
+            <option value="last_quarter">Минулий квартал</option>
+            <option value="this_year">Цей рік</option>
+            <option value="last_year">Минулий рік</option>
+          </select>
+<!--          <label>Обрати період</label>-->
+        </div>
       </div>
-      <div class="input-field col s6">
-        <input
-        id="dateTo"
-        type="date"
-        formControlName="dateTo">
-        <label for="dateFrom">Дата по</label>
+      <div class="row">
+        <div class="input-field col s12">
+          <input
+            id="client"
+            type="text"
+            formControlName="client" hidden>
+          <input
+            id="clientName"
+            type="text"
+            formControlName="clientName"
+            readonly>
+          <label for="client">Клієнт</label>
+          <i (click)="client_sel.openModal()" class="material-icons prefix select-button">more_horiz</i>
+        </div>
+      </div>
+      <div class="row">
+        <button
+          (click)="applyFilter()"
+          class="waves-effect waves-light btn right"
+        ><i class="material-icons left">check</i>Фільтр</button>
+        <button
+          (click)="resetFilter()"
+          class="waves-effect waves-light btn right grey darken-1 mr20"
+        ><i class="material-icons left">clear</i>Скинути</button>
       </div>
     </div>
 
-    <div class="row">
-      <button
-      class="waves-effect waves-light btn right"
-      ><i class="material-icons left">check</i>Фільтр</button>
-      <button
-        class="waves-effect waves-light btn right grey darken-1 mr20"
-      ><i class="material-icons left">clear</i>Скинути</button>
-    </div>
   </div>
 </div>
+<!-- Modal Filter END -->
+
+<!-- INCLUDES -->
+<app-select-client (parentComp)="clientAfterSelect($event)"></app-select-client>

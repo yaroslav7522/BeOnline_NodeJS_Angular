@@ -40,6 +40,7 @@ ul.sidenav li.active, ul.sidenav .logout {background-color: rgba(0,0,0,0.05);}
 .table_form tbody input {border-bottom: none !important;}
 .table_form tr:nth-child(even)    { background-color: rgba(241, 241, 241, 0.54); }
 .table_form select {border: none; background: none;}
+.mat-elevation-z8 tr td {padding: 0 5px;}
 /*.select-button {font-size: inherit !important;     float: right;
   top: -40px;
   position: relative;
@@ -50,7 +51,8 @@ ul.sidenav li.active, ul.sidenav .logout {background-color: rgba(0,0,0,0.05);}
   border-radius: 8px;
 }*/
 .select-button {margin-left: -25px;display: none !important;position: absolute; width: 3rem; font-size: 2rem; transition: color .2s; top: 0.5rem;}
-.select-button.active, .select-button:hover {display: inline-block !important;}
+.select-button.active, .select-button:hover {display: inline-block !important; cursor: pointer;}
 .small-btn {height: 20px; width: 20px; line-height: 20px; padding: 0;}
 .w_auto {width: auto;}
 .tabs-content {overflow-y: scroll;}
+#filter_modal select {border: none; border-bottom: 1px solid #000; background: none;}
