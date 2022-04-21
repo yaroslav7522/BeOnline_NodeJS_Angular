@@ -11,18 +11,23 @@ module.exports.getAll = async function(req, res){
 
     //date check $gte - >=; $lte - <=
     if(req.query.start){
-        query.date = { $gte: req.query.start }
+        query.date = { $gte: new Date(req.query.start) }
     }
     if(req.query.end){
         if(!query.date){
             query.date = {}
         }
-        query.date['$lte'] = req.query.end
+        query.date['$lte'] = new Date(req.query.end)
     }
 
     if(req.query.number){
         query.number = +req.query.number
     }
+
+    if(req.query.status){
+        query.status = +req.query.status
+    }
+
     if(req.query.client){
         query.client = mongoose.Types.ObjectId(req.query.client)
     }
@@ -47,6 +52,7 @@ module.exports.getAll = async function(req, res){
             ])
         res.status(200).json({
             success: true,
+            //orders_count: orders,
             orders: orders
         })
 
@@ -102,6 +108,7 @@ module.exports.add = async function(req, res){
             payment: req.body.payment,
             client: req.body.client,
             user: req.user.id,
+            status: req.body.status,
             number: ( lastOrder.number ? lastOrder.number : 0 ) + 1
         }).save()
         res.status(200).json({
