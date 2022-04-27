@@ -8,13 +8,23 @@ import {MaterialService} from "../../classes/material.service";
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.css']
 })
-export class MainLayoutComponent {
+export class MainLayoutComponent implements AfterViewInit {
+
+  // @ts-ignore
+  @ViewChild('leftMenu') public leftMenu: ElementRef
+  // @ts-ignore
+  @ViewChild('collapsible') public collapsible: ElementRef
 
   constructor(private auth: AuthService, private router: Router) { }
 
   logout(){
     this.auth.logout()
     this.router.navigate(['/login'])
+  }
+
+  ngAfterViewInit() {
+    //MaterialService.InitLeftMenu(this.leftMenu)
+    MaterialService.InitDropdownMenu(this.collapsible)
   }
 
 }

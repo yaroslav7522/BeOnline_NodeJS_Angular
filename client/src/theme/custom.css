@@ -19,9 +19,12 @@
 .folder { border: 2px solid #dbdb12;}
 .folder-title {font-weight: bold;}
 .sidenav {background: #4ea69a;}
+.sidenav .collapsible ul {background: #55b0a4;}
 .sidenav h4 {color: #fff; opacity: 1; }
 /*ul.sidenav li {background: #f4f4f4;}*/
-ul.sidenav li.active, ul.sidenav .logout {background-color: rgba(0,0,0,0.05);}
+ul.sidenav li.active, ul.sidenav .logout, .collapsible li.active {background-color: rgba(0,0,0,0.05) !important;}
+.collapsible li.active {color: #efefef;}
+.collapsible .material-icons.arrow {float: right;}
 
 .mat-table .material-icons { color: #26a69a; cursor: pointer;}
 .mat-table .material-icons:hover { color: #f44336 !important; }
@@ -40,7 +43,8 @@ ul.sidenav li.active, ul.sidenav .logout {background-color: rgba(0,0,0,0.05);}
 .table_form tbody input {border-bottom: none !important;}
 .table_form tr:nth-child(even)    { background-color: rgba(241, 241, 241, 0.54); }
 .table_form select {border: none; background: none;}
-.mat-elevation-z8 tr td {padding: 0 5px;}
+.mat-elevation-z8 thead tr td {color: #9e9e9e;}
+.mat-elevation-z8 tbody tr td {padding: 0 5px;}
 /*.select-button {font-size: inherit !important;     float: right;
   top: -40px;
   position: relative;
@@ -55,4 +59,6 @@ ul.sidenav li.active, ul.sidenav .logout {background-color: rgba(0,0,0,0.05);}
 .small-btn {height: 20px; width: 20px; line-height: 20px; padding: 0;}
 .w_auto {width: auto;}
 .tabs-content {overflow-y: scroll;}
-#filter_modal select {border: none; border-bottom: 1px solid #000; background: none;}
+#filter_modal select {border: none; border-bottom: 1px solid #9e9e9e; background: none;}
+.barcode_icon {transform: rotate(90deg);}
+.barcode {width:auto !important;}

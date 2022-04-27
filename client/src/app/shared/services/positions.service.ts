@@ -22,6 +22,11 @@ export class PositionsService {
     return this.http.get<PositionsResponse>(`/api/position/category/${id}`)
   }
 
+  getByBarcode(bc: string): Observable<PositionsResponse>{
+    if(!bc){bc = 'null'}
+    return this.http.get<PositionsResponse>(`/api/position/barcode/${bc}`)
+  }
+
   getAll(): Observable<PositionsResponse>{
     return this.http.get<PositionsResponse>('/api/position')
   }

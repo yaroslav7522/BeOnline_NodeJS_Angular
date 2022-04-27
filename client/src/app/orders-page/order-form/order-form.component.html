@@ -10,9 +10,7 @@
             [disabled]="form.invalid || form.disabled"
             class="waves-effect waves-light btn"
             (click)="onSubmit()"
-          >
-            Зберегти зміни
-          </button>
+          >Зберегти</button>
         </span>
       </div>
     </div>
@@ -21,19 +19,21 @@
 
 <ng-container *ngIf="!loading else loader"></ng-container>
 <div class="row">
-  <form class="col s12" [formGroup]="form" (ngSubmit)="onSubmit">
+  <form class="col s12" [formGroup]="form" (ngSubmit)="onSubmit" (keydown.enter)="$event.preventDefault()">
     <div class="row">
-      <div class="input-field col s1">
+      <div class="input-field col s2">
         <input id="number" type="text" formControlName="number" readonly >
         <label for="number">Номер</label>
       </div>
-      <div class="input-field col s2">
+      <div class="input-field col s3">
         <input id="date" type="date" formControlName="date" >
         <label for="date">Дата</label>
       </div>
-      <div class="input-field col s2">
-        <input id="status" type="text" formControlName="status" >
-        <label for="status">Статус</label>
+      <div class="input-field col s4">
+        <select id="status" formControlName="status" class="icons" #selectField>
+            <option *ngFor="let item of orderStatuses" [ngValue]="item.id">{{item.name}}</option>
+        </select>
+        <label>Статус</label>
       </div>
     </div>
     <div class="row">
@@ -55,7 +55,7 @@
         <i (click)="client_sel.openModal()" class="material-icons prefix select-button">more_horiz</i>
         <span
           class="helper-text red-text"
-          *ngIf="form.get('client').invalid && form.get('clientName').touched">Error found</span>
+          *ngIf="form.get('client').invalid && form.get('clientName').touched">Заповніть клієнта</span>
       </div>
     </div>
 
@@ -70,12 +70,14 @@
       <div id="products" class="col s12">
         <!-------------- PRODUCTS BEGIN --------------->
         <button
-          class="waves-effect waves-light btn-floating darken-1 mr20 mt10"
-          (click)="addListRow('')"><i class="small material-icons">add</i></button>
-<!--        <button-->
-<!--          class="waves-effect waves-light btn-floating darken-1 mr20 mt10"-->
-<!--          (click)="addListRow('')"><i class="small material-icons">format_align_justify</i></button>-->
-<!--        <input id="icon_prefix" type="text" class="validate" #barcodeInput>-->
+          class="tooltipped waves-effect waves-light btn-floating darken-1 mr20 mt10 mb10"
+          data-tooltip="Додати товар" data-position="top"
+          (click)="addListRow('', '')"><i class="small material-icons">add</i></button>
+        <button
+          class="tooltipped waves-effect waves-light btn-floating darken-1 mr20 mt10 mb10 barcode_icon"
+          data-tooltip="Пошук по штрихкоду" data-position="top"
+          (click)="showhide_barcode()"><i class="small material-icons">format_align_justify</i></button>
+        <input *ngIf="show_barcode" id="icon_prefix" type="text" class="validate barcode" placeholder="Штрихкод" (keydown.enter)="barcodeFind($event)" #barcodeInput>
         <ng-container formArrayName="list">
           <table class="table_form mat-elevation-z8 mt10">
             <thead>
@@ -89,7 +91,7 @@
             </thead>
             <tbody>
             <tr *ngIf="!listFormArray.length">
-              <td class="input-field col center" colspan="5">No ptoducts yet</td>
+              <td class="input-field col center" colspan="5">Товари відсутні</td>
             </tr>
             <tr *ngFor="let listEl of listFormArray.controls; let i = index">
               <ng-container [formGroupName]="i">
@@ -98,13 +100,13 @@
                     <i (click)="pos_sel.openModal(i)" class="material-icons prefix select-button">more_horiz</i>
                   </td>
                   <td>
-                    <input id="quantity" type="number" formControlName="quantity" (change)="updateTotals(i)" >
+                    <input id="quantity" type="number" formControlName="quantity" (change)="updateTotals(i)" min="0" >
                   </td>
                   <td>
-                    <input id="cost" type="number" formControlName="cost" (change)="updateTotals(i)" >
+                    <input id="cost" type="number" formControlName="cost" (change)="updateTotals(i)" min="0" >
                   </td>
                   <td>
-                    <input id="total" type="number" formControlName="total" readonly >
+                    <input type="number" formControlName="total" readonly >
                   </td>
                   <td>
                     <button
@@ -114,6 +116,17 @@
               </ng-container>
             </tr>
             </tbody>
+            <tfoot>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <span class="right">Сума:</span>
+                </td>
+                <td><input type="text" readonly #orderTotal ></td>
+                <td></td>
+              </tr>
+            </tfoot>
           </table>
         </ng-container>
         <!-------------- PRODUCTS END --------------->
@@ -134,7 +147,7 @@
             </thead>
             <tbody>
             <tr *ngIf="!paymentFormArray.length">
-              <td class="input-field col center" colspan="5">No payments yet</td>
+              <td class="input-field col center" colspan="5">Оплати відсутні</td>
             </tr>
             <tr *ngFor="let listEl of paymentFormArray.controls; let i = index">
               <ng-container [formGroupName]="i">
@@ -147,7 +160,7 @@
                   </select>
                 </td>
                 <td>
-                  <input id="total" type="number" formControlName="total" >
+                  <input id="total" type="number" formControlName="total" (change)="updatePaidTotals()" >
                 </td>
                 <td>
                   <button
@@ -157,13 +170,25 @@
               </ng-container>
             </tr>
             </tbody>
+            <tfoot>
+            <tr>
+              <td>
+                <span class="right">Сума:</span>
+              </td>
+              <td><input type="text" readonly #paidTotal ></td>
+              <td></td>
+            </tr>
+            </tfoot>
           </table>
         </ng-container>
         <!-------------- PAYMENT END --------------->
       </div>
       <div  id="additional" class="col s12">
         <!-------------- ADDITIONAL BEGIN --------------->
-
+        <div class="input-field col s12">
+          <textarea id="detail" class="materialize-textarea" formControlName="detail" #ta></textarea><!--data-length="200"-->
+          <label for="detail">Коментар</label>
+        </div>
         <!-------------- ADDITIONAL END --------------->
       </div>
     </div>

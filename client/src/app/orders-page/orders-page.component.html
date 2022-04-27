@@ -56,14 +56,12 @@
         </ng-container>
         <ng-container matColumnDef="client_details">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Клієнт</th>
-          <td mat-cell *matCellDef="let element"> {{element.client_details[0].name}} </td>
+          <td mat-cell *matCellDef="let element">{{element.client_details[0].name}}</td>
         </ng-container>
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Статус оплати</th>
-          <td mat-cell *matCellDef="let element" [ngSwitch]="getPaymentStatus(element)">
-            <ng-container *ngFor="let pstat of paymentStatuses">
-              <span *ngSwitchCase="pstat.id" class="new badge {{pstat.class}}" data-badge-caption="">{{pstat.name}}</span>
-            </ng-container>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Статус</th>
+          <td mat-cell *matCellDef="let element">
+            {{getStatusName(element.status)}}
           </td>
         </ng-container>
         <ng-container matColumnDef="total">
@@ -86,7 +84,7 @@
 
 
     <ng-template #empty>
-      <div class="center">No items found</div>
+      <div class="center">Товари відсутні</div>
     </ng-template>
   </div>
 </div>
@@ -113,7 +111,7 @@
           <label for="dateTo">Дата по</label>
         </div>
         <div class="input-field col s4">
-          <select class="browser-default" (change)="changePeriod()" #periodSelect>
+          <select class="browser-default select-wrapper" (change)="changePeriod()" #periodSelect>
             <option> --- Період --- </option>
             <option value="today">Сьогодні</option>
             <option value="yesterday">Вчора</option>
@@ -126,11 +124,11 @@
             <option value="this_year">Цей рік</option>
             <option value="last_year">Минулий рік</option>
           </select>
-<!--          <label>Обрати період</label>-->
+          <label>Обрати період</label>
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s8">
           <input
             id="client"
             type="text"
@@ -142,6 +140,13 @@
             readonly>
           <label for="client">Клієнт</label>
           <i (click)="client_sel.openModal()" class="material-icons prefix select-button">more_horiz</i>
+        </div>
+        <div class="input-field col s4">
+          <select class="browser-default select-wrapper" formControlName="status" #statusSelect>
+            <option value=""> --- Статус --- </option>
+            <option *ngFor="let item of orderStatuses" [ngValue]="item.id">{{item.name}}</option>
+          </select>
+          <label>Статус</label>
         </div>
       </div>
       <div class="row">

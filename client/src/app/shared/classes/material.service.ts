@@ -53,4 +53,21 @@ export class MaterialService {
   static UpdateTxtFields(){
     M.updateTextFields()
   }
+
+  static UpdateTextarea(ref: ElementRef){
+    M.textareaAutoResize(ref.nativeElement)
+  }
+
+  static InitTooltip(ref: any){
+    M.Tooltip.init(ref);
+  }
+
+  static InitLeftMenu(ref: ElementRef){
+    //var instances = M.Sidenav.init(ref.nativeElement);
+    //instances.open();
+  }
+
+  static InitDropdownMenu(refC: ElementRef){
+    var collapsibleInstance = M.Collapsible.init(refC.nativeElement);
+  }
 }

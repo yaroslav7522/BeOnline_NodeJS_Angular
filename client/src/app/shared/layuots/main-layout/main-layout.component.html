@@ -1,11 +1,39 @@
-<ul class="sidenav a-sidenav">
+<!--<header>-->
+<!--<ul id="sidenav-left" class="collapsible collapsible-accordion">-->
+<!--  <li class="bold waves-effect">-->
+<!--    <a class="collapsible-header" tabindex="0">Pages<i class="material-icons chevron">chevron_left</i></a>-->
+<!--    <div class="collapsible-body" style="">-->
+<!--      <ul>-->
+<!--        <li><a href="/pages/admin-dashboard" class="waves-effect active">Dashboard<i class="material-icons">web</i></a></li>-->
+<!--        <li><a href="/pages/admin-fixed-chart" class="waves-effect">Fixed Chart<i class="material-icons">list</i></a></li>-->
+<!--        <li><a href="/pages/admin-grid" class="waves-effect">Grid<i class="material-icons">dashboard</i></a></li>-->
+<!--        <li><a href="/pages/admin-chat" class="waves-effect">Chat<i class="material-icons">chat</i></a></li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </li>-->
+<!--</ul>-->
+<!--</header>-->
+
+<ul class="sidenav a-sidenav" #leftMenu>
+<!--<ul id="slide-out" class="sidenav" #leftMenu>-->
   <div><h4>BeOnline</h4></div>
-  <li class="bold" routerLinkActive="active"><a routerLink="/overview" class="waves-effect waves-light">Обзор <i class="material-icons">picture_in_picture_alt</i></a></li>
-  <li class="bold" routerLinkActive="active"><a routerLink="/analytics" class="waves-effect waves-light">Аналітика <i class="material-icons">poll</i></a></li>
-  <li class="bold" routerLinkActive="active"><a routerLink="/orders" class="waves-effect waves-light">Замовлення <i class="material-icons">shopping_basket</i></a></li>
+  <li class="bold" routerLinkActive="active"><a routerLink="/overview" class="waves-effect waves-light">Робочий стіл <i class="material-icons">picture_in_picture_alt</i></a></li>
+  <li class="no-padding">
+  <ul class="collapsible collapsible-accordion" #collapsible>
+      <li>
+      <a class="collapsible-header">Продажі<i class="material-icons">shopping_cart</i><i class="material-icons arrow">arrow_drop_down</i></a>
+        <div class="collapsible-body">
+        <ul>
+          <li class="bold" routerLinkActive="active"><a routerLink="/orders" class="waves-effect waves-light">Замовлення <i class="material-icons">shopping_basket</i></a></li>
+          <li class="bold" routerLinkActive="active"><a routerLink="/clients" class="waves-effect waves-light">Клієнти <i class="material-icons">group</i></a></li>
+          <li class="bold" routerLinkActive="active"><a routerLink="/positions" class="waves-effect waves-light">Номенклатура <i class="material-icons">web</i></a></li>
+          <li class="bold" routerLinkActive="active"><a routerLink="/analytics" class="waves-effect waves-light">Звіти по продажах <i class="material-icons">poll</i></a></li>
+        </ul>
+    </div>
+    </li>
+  </ul>
+  </li>
   <!--<li class="bold" routerLinkActive="active"><a routerLink="/tables" class="waves-effect waves-light">Столи</a></li>-->
-  <li class="bold" routerLinkActive="active"><a routerLink="/clients" class="waves-effect waves-light">Клієнти <i class="material-icons">group</i></a></li>
-  <li class="bold" routerLinkActive="active"><a routerLink="/positions" class="waves-effect waves-light">Номенклатура <i class="material-icons">web</i></a></li>
   <li class="bold last"><a class="waves-effect waves-orange logout" (click)="logout()">Вийти</a></li>
 </ul>
 <main class="content">

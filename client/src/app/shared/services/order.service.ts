@@ -22,7 +22,8 @@ export class OrderService {
     const fp = new FormData()
     fp.append('client', formVal.client)
     fp.append('date', formVal.date)
-    fp.append('status', formVal.status)
+    fp.append('status', (formVal.status ? formVal.status : 0))
+    fp.append('detail', (formVal.detail ? formVal.detail : ''))
 
     if(formVal.list){
       this.createFormData(fp, 'list', formVal.list)
@@ -38,7 +39,8 @@ export class OrderService {
     const fp = new FormData()
     fp.append('client', formVal.client)
     fp.append('date', formVal.date)
-    fp.append('status', formVal.status)
+    fp.append('status', (formVal.status ? formVal.status : 0))
+    fp.append('detail', (formVal.detail ? formVal.detail : ''))
 
     if(formVal.list){
       this.createFormData(fp, 'list', formVal.list)

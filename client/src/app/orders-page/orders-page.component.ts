@@ -7,7 +7,7 @@ import {Title} from "@angular/platform-browser";
 import {OrderService} from "../shared/services/order.service";
 import {MaterialService} from "../shared/classes/material.service";
 import {constService} from "../shared/services/const.service";
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {SelectClientComponent} from "../shared/components/select-client/select-client.component";
 import {ClientsService} from "../shared/services/clients.service";
 import {format, addDays, eachWeekOfInterval, endOfMonth, startOfMonth, startOfQuarter, endOfQuarter, startOfYear, endOfYear} from "date-fns";
@@ -32,11 +32,14 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
   // @ts-ignore
   @ViewChild('periodSelect') public periodSelect: ElementRef
   // @ts-ignore
+  @ViewChild('statusSelect') public statusSelect: ElementRef
+  // @ts-ignore
   @ViewChild(SelectClientComponent) client_sel
   // @ts-ignore
   filterForm: FormGroup
   // @ts-ignore
   filterColections: any[]
+  orderStatuses: any[] | undefined
 
   constructor(
     private titleService: Title,
@@ -48,6 +51,7 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
     this.titleService.setTitle('OnlineCafe - Замовлення')
 
     this.paymentStatuses = this.constServ.getPaymentStatuses()
+    this.orderStatuses = this.constServ.getOrderStatuses()
 
     this.filterColections = []
     this.filterForm = new FormGroup({
@@ -55,6 +59,7 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
       dateTo: new FormControl(null),
       client: new FormControl(null),
       clientName: new FormControl(null),
+      status: new FormControl(null),
     })
 
     let queryFilterSaved = window.localStorage.getItem('order_filter')
@@ -67,7 +72,9 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     MaterialService.InitPopup(this.modal_filter)
+    MaterialService.InitSelect(this.statusSelect)
     MaterialService.UpdateTxtFields()
+    //MaterialService.InitSelect(this.periodSelect)
   }
 
   loadOrders() {
@@ -141,7 +148,8 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
       this.filterColections?.push({
         name: 'date',
         title: 'Дата',
-        value: (this.filterForm.value.dateFrom ? this.filterForm.value.dateFrom : ' > ') + (this.filterForm.value.dateTo ? ' - ' + this.filterForm.value.dateTo : ' < '),
+        value: (this.filterForm.value.dateFrom ? format(new Date(this.filterForm.value.dateFrom), "dd.MM.yyyy") : ' > ')
+             + (this.filterForm.value.dateTo ? ' - ' + format(new Date(this.filterForm.value.dateTo), "dd.MM.yyyy") : ' < '),
         dateFrom: this.filterForm.value.dateFrom,
         dateTo: this.filterForm.value.dateTo
       })
@@ -152,6 +160,14 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
         title: 'Клієнт',
         value: this.filterForm.value.clientName,
         client: this.filterForm.value.client
+      })
+    }
+    if (this.filterForm.value.status) {
+      this.filterColections?.push({
+        name: 'status',
+        title: 'Статус',
+        value: this.getStatusName(this.filterForm.value.status),
+        status: this.filterForm.value.status
       })
     }
 
@@ -189,6 +205,9 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
         if (item.name == 'client') {
           query += (query.length ? '&' : '') + 'client=' + item.client
         }
+        if (item.name == 'status') {
+          query += (query.length ? '&' : '') + 'status=' + item.status
+        }
       })
     }
 
@@ -225,6 +244,12 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
         if (filterName == 'end') {
           this.filterForm.patchValue({
             dateTo: format(new Date(filterVal), "yyyy-MM-dd")
+          })
+          this.applyFilter(true)
+        }
+        if (filterName == 'status') {
+          this.filterForm.patchValue({
+            status: filterVal
           })
           this.applyFilter(true)
         }
@@ -299,6 +324,13 @@ export class OrdersPageComponent implements OnInit, AfterViewInit {
         dateFrom: format(new Date(dateFrom), "yyyy-MM-dd"),
         dateTo: format(new Date(dateTo), "yyyy-MM-dd")
       })
+    }
+  }
+
+  getStatusName(id: number){
+    if(this.orderStatuses){
+      let status = this.orderStatuses.find(el => el.id === +id);
+      return (status ? status.name : '')
     }
   }
 }

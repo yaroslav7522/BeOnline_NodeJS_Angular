@@ -77,16 +77,18 @@ export interface Order {
   date: Date
   number: number
   status: number
+  detail: string
   user?: string
   client: Client
   list: [{
+    id: string
     name: string
     quantity: number
     cost: number
     total: number
   }],
   payment: [{
-    type: string
+    type: number
     total: number
   }],
   client_details: [{
