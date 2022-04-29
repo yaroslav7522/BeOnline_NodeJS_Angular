@@ -16,8 +16,7 @@ const analyticsRoutes = require('./routes/analytics')
 const categoryRoutes = require('./routes/category')
 const orderRoutes = require('./routes/order')
 const positionRoutes = require('./routes/position')
-
-const angular = require('./routes/client')
+const clientRoutes = require('./routes/client')
 
 app.use(cors())
 app.use(morgan('dev'))
