@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const keys = require('./config/keys')
 const passport = require('passport')
+var path = require('path')
 
 const app = express()
 mongoose.connect(keys.mongoUrl)
