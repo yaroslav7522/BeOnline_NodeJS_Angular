@@ -37,7 +37,7 @@ app.use('/api/order', orderRoutes)
 app.use('/api/position', positionRoutes)
 app.use('/api/client', clientRoutes)
 
-app.use('/client', angular)
+//app.use('/client', angular)
 
 //Any routes will be redirected to the angular app
 //app.get('*', function(req, res) {
