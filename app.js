@@ -18,6 +18,8 @@ const orderRoutes = require('./routes/order')
 const positionRoutes = require('./routes/position')
 const clientRoutes = require('./routes/client')
 
+const angular = require('./client/src')
+
 app.use(cors())
 app.use(morgan('dev'))
 app.use('/uploads', express.static('uploads'))
