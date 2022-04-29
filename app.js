@@ -5,7 +5,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const keys = require('./config/keys')
 const passport = require('passport')
-var path = require('path')
+//var path = require('path')
 
 const app = express()
 mongoose.connect(keys.mongoUrl)
@@ -17,7 +17,9 @@ const analyticsRoutes = require('./routes/analytics')
 const categoryRoutes = require('./routes/category')
 const orderRoutes = require('./routes/order')
 const positionRoutes = require('./routes/position')
-const clientRoutes = require('./routes/client')
+const clientRoutes = require('./client/src/index.html')
+
+const angular = require('./routes/client')
 
 app.use(cors())
 app.use(morgan('dev'))
@@ -35,9 +37,11 @@ app.use('/api/order', orderRoutes)
 app.use('/api/position', positionRoutes)
 app.use('/api/client', clientRoutes)
 
+app.use('/client', angular)
+
 //Any routes will be redirected to the angular app
-app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/src/index.html'));
-});
+//app.get('*', function(req, res) {
+//    res.sendFile(path.join(__dirname, 'client/src/index.html'));
+//});
 
 module.exports = app
