@@ -36,8 +36,6 @@ app.use('/api/order', orderRoutes)
 app.use('/api/position', positionRoutes)
 app.use('/api/client', clientRoutes)
 
-const port = 80
-
-app.listen(port, () => { console.log('Server has been started at port ' + port + '!'); })
+app.listen(8081, () => { console.log('Server has been started at port 8081!'); })
 
 module.exports = app
