@@ -38,4 +38,4 @@ app.use('/api/client', clientRoutes)
 
 app.listen(8081, () => { console.log('Server has been started at port 8081!'); })
 
-module.exports = app
+//module.exports = app
