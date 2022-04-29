@@ -34,4 +34,9 @@ app.use('/api/order', orderRoutes)
 app.use('/api/position', positionRoutes)
 app.use('/api/client', clientRoutes)
 
+//Any routes will be redirected to the angular app
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/src/index.html'));
+});
+
 module.exports = app
