@@ -17,7 +17,7 @@ const analyticsRoutes = require('./routes/analytics')
 const categoryRoutes = require('./routes/category')
 const orderRoutes = require('./routes/order')
 const positionRoutes = require('./routes/position')
-const clientRoutes = require('./client/src/index.html')
+//const clientRoutes = require('./client/src/index.html')
 
 const angular = require('./routes/client')
 
