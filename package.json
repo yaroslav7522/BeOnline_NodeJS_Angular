@@ -7,7 +7,7 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon --inspect index",
     "client-install": "npm install --prefix client",
-    "client": "npm run start --prefix client2",
+    "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
