@@ -1,7 +1,7 @@
 {
-  "name": "onlinecafe",
+  "name": "beonline",
   "version": "1.0.0",
-  "description": "Manager your cafe online. Fast & easy",
+  "description": "Manager your bisunes online. Fast & easy",
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
