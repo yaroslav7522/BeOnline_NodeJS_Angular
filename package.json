@@ -4,7 +4,7 @@
   "description": "Manager your cafe online. Fast & easy",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "start": "node index.js",
     "server": "nodemon --inspect index",
     "client-install": "npm install --prefix client",
     "client": "npm run start --prefix client",
