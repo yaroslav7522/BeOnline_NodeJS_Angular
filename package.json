@@ -1,14 +1,15 @@
 {
-  "name": "beonline",
+  "name": "onlinecafe",
   "version": "1.0.0",
-  "description": "Manager your bisunes online. Fast & easy",
+  "description": "Manager your cafe online. Fast & easy",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node index",
     "server": "nodemon --inspect index",
     "client-install": "npm install --prefix client",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client_dev": "npm run start_dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client_dev\""
   },
   "keywords": [
     "online",
@@ -29,10 +30,10 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
     "passport": "^0.5.2",
-    "concurrently": "^7.0.0",
-    "passport-jwt": "^4.0.0",
-    "nodemon": "^2.0.15"
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
   }
 }

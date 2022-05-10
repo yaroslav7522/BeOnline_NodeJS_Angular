@@ -47,16 +47,36 @@ module.exports.getByCategory = async function(req, res){
 
     try {
         const positions = await Position.find({category: catID})
-        if(positions) {
+        if(positions && positions.length > 0) {
             res.status(200).json({
                 success: true,
                 positions: positions
             })
         }else{
-            res.status(404).json({success:false, message: 'Positions not found!'})
+            res.status(200).json({success:false, message: 'Positions not found!'})
         }
     }catch(e){
         errorHandler(res, e)
+    }
+}
+
+module.exports.getByBarcode = async function(req, res){
+    if(!req.params.bc || req.params.bc === 'null'){
+        res.status(200).json({success:false, message: 'Barcode is empty!'})
+    }else{
+        try {
+            const positions = await Position.find({barcode: req.params.bc})
+            if(positions && positions.length > 0) {
+                res.status(200).json({
+                    success: true,
+                    positions: positions
+                })
+            }else{
+                res.status(200).json({success:false, message: 'Positions by barcode not found!'})
+            }
+        }catch(e){
+            errorHandler(res, e)
+        }
     }
 }
 

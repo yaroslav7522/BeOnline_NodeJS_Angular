@@ -1,12 +1,12 @@
 {
   "/api/*": {
-    "target": "http://beonline.us-east-1.elasticbeanstalk.com",
+    "target": "http://localhost:5000",
     "secure": false,
     "loglevel": "debug",
     "changeOrigin": true
   },
   "/uploads/*": {
-    "target": "http://beonline.us-east-1.elasticbeanstalk.com",
+    "target": "http://localhost:5000",
     "secure": false,
     "loglevel": "debug",
     "changeOrigin": true

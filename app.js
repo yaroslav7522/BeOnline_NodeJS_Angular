@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const keys = require('./config/keys')
 const passport = require('passport')
+//var path = require('path')
 
 const app = express()
 mongoose.connect(keys.mongoUrl)
@@ -17,8 +18,6 @@ const categoryRoutes = require('./routes/category')
 const orderRoutes = require('./routes/order')
 const positionRoutes = require('./routes/position')
 const clientRoutes = require('./routes/client')
-
-//const angular = require('./client/src')
 
 app.use(cors())
 app.use(morgan('dev'))
@@ -36,6 +35,9 @@ app.use('/api/order', orderRoutes)
 app.use('/api/position', positionRoutes)
 app.use('/api/client', clientRoutes)
 
-//app.listen(8081, () => { console.log('Server has been started at port 8081!'); })
+//Any routes will be redirected to the angular app
+//app.get('*', function(req, res) {
+//    res.sendFile(path.join(__dirname, 'client/src/index.html'));
+//});
 
 module.exports = app

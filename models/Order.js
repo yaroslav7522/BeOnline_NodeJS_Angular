@@ -12,12 +12,16 @@ const orderSchema = new Schema({
     status: {
         type: Number
     },
+    detail: {
+        type: String
+    },
     client: {
         ref: 'clients',
         type: Schema.Types.ObjectId
     },
     list:[
         {
+            id: {type: String},
             name: {type: String},
             quantity:{type: Number},
             cost:{type: Number},
@@ -26,7 +30,7 @@ const orderSchema = new Schema({
     ],
     payment:[
         {
-            type: {type: String},
+            type: {type: Number},
             total: {type: Number},
         }
     ],

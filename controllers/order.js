@@ -109,6 +109,7 @@ module.exports.add = async function(req, res){
             client: req.body.client,
             user: req.user.id,
             status: req.body.status,
+            detail: req.body.detail,
             number: ( lastOrder.number ? lastOrder.number : 0 ) + 1
         }).save()
         res.status(200).json({
