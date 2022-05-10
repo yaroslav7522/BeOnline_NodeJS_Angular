@@ -1,5 +1,5 @@
 {
-  "name": "beonline",
+  "name": "beonline", 
   "version": "1.0.0",
   "description": "Manager your cafe online. Fast & easy",
   "main": "index.js",
