@@ -6,4 +6,6 @@ function sendSpaFileIfUnmatched(req, res){
     res.sendFile("/client/dist/client/index.html", { root: '.' });
 }
 
+
+
 app.listen(port, () => { console.log('Server has been started at port ' + port + '!'); })

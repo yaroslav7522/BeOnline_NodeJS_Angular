@@ -34,6 +34,7 @@ app.use('/api/category', categoryRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/position', positionRoutes)
 app.use('/api/client', clientRoutes)
+app.use(express.static(__dirname.replace(/\\/g, "/") + '/client/dist/client'))
 
 //Any routes will be redirected to the angular app
 //app.get('*', function(req, res) {
