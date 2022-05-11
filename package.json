@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start1": "node index",
-	"start": "concurrently \"npm run server\" \"npm run client_dev\""
+	"start": "concurrently \"node index\" \"npm run client_dev\""
     "server": "nodemon --inspect index",
     "client-install": "npm install --prefix client",
     "client": "npm run start --prefix client",
