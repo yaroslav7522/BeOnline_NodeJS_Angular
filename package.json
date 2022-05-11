@@ -1,16 +1,15 @@
 {
-  "name": "beonline", 
+  "name": "beonline",
   "version": "1.0.0",
   "description": "Manager your cafe online. Fast & easy",
   "main": "index.js",
   "scripts": {
-    "start1": "node index",
-	"start": "concurrently \"node index\" \"npm run client_dev\""
+    "start": "node index",
     "server": "nodemon --inspect index",
     "client-install": "npm install --prefix client",
     "client": "npm run start --prefix client",
     "client_dev": "npm run start_dev --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client_dev\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
     "online",
@@ -31,10 +30,10 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
     "passport": "^0.5.2",
-    "passport-jwt": "^4.0.0",
-    "concurrently": "^7.0.0"
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
+    "concurrently": "^7.0.0",
     "nodemon": "^2.0.15"
   }
 }
